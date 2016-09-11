@@ -2,9 +2,9 @@
 
 ## 基于RxJava的异步任务框架，可以进行任务的链式调用
 
-支持操作符: call、next、map、filter、subscribe
-支持调度器: Computation、NewThread、Computation、IO、Trampoline
-可以通过asObservable转化成Observable
+支持操作符: call、next、map、filter、subscribe.
+支持调度器: Computation、NewThread、Computation、IO、Trampoline.
+可以通过asObservable转化成Observable.
 
 ```
 RxAsync.call(new ComputationAsyncCall<String>() {
