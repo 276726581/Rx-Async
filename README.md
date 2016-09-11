@@ -14,28 +14,27 @@ RxAsync.call(new ComputationAsyncCall<String>() {
             public String call() throws Exception {
                 String name = Thread.currentThread().getName();
                 System.out.println("1: " + name);
-                return null;
-            }
-        }).next(new NewThreadAsyncNextCall<String, String>() {
-            @Override
-            public String call(String s) {
-                String name = Thread.currentThread().getName();
-                System.out.println("2: " + name);
-                return null;
+                return "1,2,3,4,5";
             }
         }).map(new ComputationAsyncMap<String, String>() {
             @Override
             public String[] call(String s) {
                 String name = Thread.currentThread().getName();
                 System.out.println("3: " + name);
-                return null;
+                
+                String[] split = s.split(",");
+                return split;
             }
         }).filter(new TrampolineAsyncNextCall<String, Boolean>() {
             @Override
             public Boolean call(String s) {
                 String name = Thread.currentThread().getName();
                 System.out.println("4: " + name);
-                return true;
+                
+                if(!"3".equals(s)) {
+                    return true;
+                }
+                return false;
             }
         }).next(new IOThreadAsyncNextCall<String, String>() {
             @Override
