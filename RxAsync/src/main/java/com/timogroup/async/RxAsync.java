@@ -10,6 +10,7 @@ import com.timogroup.async.utl.SchedulerUtil;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.functions.Func1;
 import rx.internal.producers.QueuedProducer;
 
@@ -99,18 +100,21 @@ public final class RxAsync<T> {
         return observable;
     }
 
-    public void subscribe(RxAsyncSubscribe<T> success) {
+    public Subscription subscribe(RxAsyncSubscribe<T> success) {
         Scheduler scheduler = SchedulerUtil.getScheduler(success);
-        observable.observeOn(scheduler).subscribe(success);
+        Subscription subscription = observable.observeOn(scheduler).subscribe(success);
+        return subscription;
     }
 
-    public void subscribe(RxAsyncSubscribe<T> success, RxAsyncError error) {
+    public Subscription subscribe(RxAsyncSubscribe<T> success, RxAsyncError error) {
         Scheduler scheduler = SchedulerUtil.getScheduler(success);
-        observable.observeOn(scheduler).subscribe(success, error);
+        Subscription subscription = observable.observeOn(scheduler).subscribe(success, error);
+        return subscription;
     }
 
-    public void subscribe(RxAsyncObserver<T> observer) {
+    public Subscription subscribe(RxAsyncObserver<T> observer) {
         Scheduler scheduler = SchedulerUtil.getScheduler(observer);
-        observable.observeOn(scheduler).subscribe(observer);
+        Subscription subscription = observable.observeOn(scheduler).subscribe(observer);
+        return subscription;
     }
 }
