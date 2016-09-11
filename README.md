@@ -41,27 +41,24 @@ RxAsync.call(new ComputationAsyncCall<String>() {
             public String call(String s) {
                 String name = Thread.currentThread().getName();
                 System.out.println("5: " + name);
-                return null;
+
+                return "-" + s;
             }
         }).next(new IOAsyncNextCall<String, String>() {
             @Override
             public String call(String s) {
                 String name = Thread.currentThread().getName();
                 System.out.println("6: " + name);
-                return null;
-            }
-        }).next(new IOAsyncNextCall<String, String>() {
-            @Override
-            public String call(String s) {
-                String name = Thread.currentThread().getName();
-                System.out.println("7: " + name);
-                return null;
+
+                return s + "-";
             }
         }).subscribe(new ImmediateAsyncSubscribe<String>() {
             @Override
             public void call(String s) {
                 String name = Thread.currentThread().getName();
                 System.out.println("8: " + name);
+
+                System.out.println(s);
             }
         });
 ```
