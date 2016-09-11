@@ -2,6 +2,8 @@
 
 ## 基于RxJava的异步任务框架
 
+支持: Computation、NewThread、Computation、IO、Trampoline
+
 ```
 RxAsync.call(new ComputationAsyncCall<String>() {
             @Override
