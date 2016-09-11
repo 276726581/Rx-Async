@@ -20,7 +20,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
             @Override
             public String[] call(String s) {
                 String name = Thread.currentThread().getName();
-                System.out.println("3: " + name);
+                System.out.println("2: " + name);
                 
                 String[] split = s.split(",");
                 return split;
@@ -29,7 +29,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
             @Override
             public Boolean call(String s) {
                 String name = Thread.currentThread().getName();
-                System.out.println("4: " + name);
+                System.out.println("3: " + name);
                 
                 if(!"3".equals(s)) {
                     return true;
@@ -40,7 +40,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
             @Override
             public String call(String s) {
                 String name = Thread.currentThread().getName();
-                System.out.println("5: " + name);
+                System.out.println("4: " + name);
 
                 return "-" + s;
             }
@@ -48,7 +48,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
             @Override
             public String call(String s) {
                 String name = Thread.currentThread().getName();
-                System.out.println("6: " + name);
+                System.out.println("5: " + name);
 
                 return s + "-";
             }
@@ -56,7 +56,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
             @Override
             public void call(String s) {
                 String name = Thread.currentThread().getName();
-                System.out.println("8: " + name);
+                System.out.println("6: " + name);
 
                 System.out.println(s);
             }
