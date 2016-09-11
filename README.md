@@ -37,11 +37,32 @@ RxAsync.call(new ComputationAsyncCall<String>() {
                 System.out.println("4: " + name);
                 return true;
             }
+        }).next(new NewThreadAsyncNextCall<String, String>() {
+            @Override
+            public String call(String s) {
+                String name = Thread.currentThread().getName();
+                System.out.println("5: " + name);
+                return null;
+            }
+        }).next(new NewThreadAsyncNextCall<String, String>() {
+            @Override
+            public String call(String s) {
+                String name = Thread.currentThread().getName();
+                System.out.println("6: " + name);
+                return null;
+            }
+        }).next(new NewThreadAsyncNextCall<String, String>() {
+            @Override
+            public String call(String s) {
+                String name = Thread.currentThread().getName();
+                System.out.println("7: " + name);
+                return null;
+            }
         }).subscribe(new NewThreadAsyncSubscribe<String>() {
             @Override
             public void call(String s) {
                 String name = Thread.currentThread().getName();
-                System.out.println("5: " + name);
+                System.out.println("8: " + name);
             }
         });
 ```
