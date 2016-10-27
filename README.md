@@ -4,19 +4,17 @@
 
 支持操作符: call、next、map、filter、subscribe.
 
-支持调度器: Computation、NewThread、Computation、IO、Trampoline.
+可以通过getObservable转化成Observable.
 
-可以通过asObservable转化成Observable.
-
-```
-RxAsync.call(new ComputationAsyncCall<String>() {
+``` java
+RxAsync.call(new RxCall<String>() {
             @Override
             public String call() throws Exception {
                 String name = Thread.currentThread().getName();
                 System.out.println("1: " + name);
                 return "1,2,3,4,5";
             }
-        }).map(new ComputationAsyncMap<String, String>() {
+        }, Schedulers.computation()).flatMap(new RxFlatMap<String, String>() {
             @Override
             public String[] call(String s) {
                 String name = Thread.currentThread().getName();
@@ -25,9 +23,9 @@ RxAsync.call(new ComputationAsyncCall<String>() {
                 String[] split = s.split(",");
                 return split;
             }
-        }).filter(new TrampolineAsyncNextCall<String, Boolean>() {
+        }, Schedulers.newThread()).filter(new filter<String, Boolean>() {
             @Override
-            public Boolean call(String s) {
+            public boolean accept(String s) {
                 String name = Thread.currentThread().getName();
                 System.out.println("3: " + name);
                 
@@ -36,7 +34,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
                 }
                 return false;
             }
-        }).next(new IOThreadAsyncNextCall<String, String>() {
+        }, Schedulers.io()).next(new RxNextCall<String, String>() {
             @Override
             public String call(String s) {
                 String name = Thread.currentThread().getName();
@@ -44,7 +42,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
 
                 return "-" + s;
             }
-        }).next(new IOAsyncNextCall<String, String>() {
+        }, Schedulers.computation()).next(new RxNextCall<String, String>() {
             @Override
             public String call(String s) {
                 String name = Thread.currentThread().getName();
@@ -52,7 +50,7 @@ RxAsync.call(new ComputationAsyncCall<String>() {
 
                 return s + "-";
             }
-        }).subscribe(new ImmediateAsyncSubscribe<String>() {
+        }, Schedulers.newThread()).subscribe(new RxSubscribe<String>() {
             @Override
             public void call(String s) {
                 String name = Thread.currentThread().getName();
@@ -60,5 +58,5 @@ RxAsync.call(new ComputationAsyncCall<String>() {
 
                 System.out.println(s);
             }
-        });
+        }, Schedulers.newThread());
 ```
